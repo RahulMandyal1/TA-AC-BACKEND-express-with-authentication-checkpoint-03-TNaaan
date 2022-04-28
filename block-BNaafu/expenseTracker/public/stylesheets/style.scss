@@ -194,3 +194,23 @@ form {
         }
     }
 }
+
+#formstyle{
+  @extend .center;
+  flex-direction: column;
+  padding: 4% 0;
+  form{
+    @extend .flex-column;
+  }
+  input{
+    padding : .8rem;
+    margin: 1rem;
+  }
+}
+
+.socialLoginContainer {
+  a{
+    display: inline-block;
+    margin:  0 2rem;
+  }
+}

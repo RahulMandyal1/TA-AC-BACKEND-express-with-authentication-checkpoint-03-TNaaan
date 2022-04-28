@@ -19,8 +19,8 @@
         </div>
 
         <div class="history-container">
-            <h2>History : </h2>
             <%if(categoryData){%>
+                <h2>History : </h2>
                 <%categoryData.forEach(cv=>{ %>
                     <div class="flex-row expense-history">
                         <span><%= cv.amount%></span>
@@ -30,6 +30,7 @@
                 <%})%>
             <%}%>
             <%if(incomeData){%>
+                <h2>History : </h2>
                 <%incomeData.forEach(cv=>{ %>
                     <div class="flex-row expense-history income-history">
                         <span><%= cv.amount%></span>
@@ -43,5 +44,6 @@
     <!-- left sidebar for the user filters   -->
     <aside class="left-border">
         <%- include('./partials/filtersidebar.ejs')%>
+        <%- include('./partials/datewise.ejs')%>
     </aside>
 </main>

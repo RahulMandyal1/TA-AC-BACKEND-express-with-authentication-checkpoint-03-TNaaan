@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 const Income = require("../models/income");
 const Expense = require("../models/expenses");
-const jsCode = require("../public/javascripts/index");
 const allMonths = require("../public/javascripts/index");
 const auth = require("../middlewares/auth");
 const { route } = require(".");
@@ -84,7 +83,6 @@ router.get("/", auth.isUserLoggedIn, auth.userIsVerified, async (req, res) => {
         expensCategorie: expenseCategories,
         totalIncome: monthTotalIncome,
         totalExpense: amount,
-        allMonths: allMonths,
         categoryData: expenseData,
         incomeData: undefined,
       });
@@ -107,14 +105,42 @@ router.get("/", auth.isUserLoggedIn, auth.userIsVerified, async (req, res) => {
         expensCategorie: expenseCategories,
         totalIncome: monthTotalIncome,
         totalExpense: monthTotalExpenses,
-        allMonths: allMonths,
         categoryData: undefined,
         incomeData: resultIncomeData,
       });
     }
 
-    //   display  this month all the category  expenses
+    //   display the date wise data here
+    if (req.query.start_date && req.query.end_date) {
+      //  all the expenses in between this date
+      let expenseInBetweendate = await Expense.find({
+        user: req.user._id,
+        date: {
+          $gte: req.query.start_date,
+          $lte: req.query.end_date,
+        },
+      });
+      //  all the income between in this date
+      let incomeInBetweendate = await Income.find({
+        user: req.user._id,
+        date: {
+          $gte: req.query.start_date,
+          $lte: req.query.end_date,
+        },
+      });
+      // total amount  of income and expense
+      let totalExpense = totalAmount(expenseInBetweendate);
+      let totalIncome = totalAmount(incomeInBetweendate);
 
+      return res.render("dashboard", {
+        incomeCategories: incomeCategories,
+        expensCategorie: expenseCategories,
+        totalIncome: totalIncome,
+        totalExpense: totalExpense,
+        categoryData: undefined,
+        incomeData: undefined,
+      });
+    }
     // render the dashboard along with the sidebar and  the required data
     return res.render("dashboard", {
       incomeCategories: incomeCategories,
@@ -122,7 +148,6 @@ router.get("/", auth.isUserLoggedIn, auth.userIsVerified, async (req, res) => {
       totalIncome: monthTotalIncome,
       totalExpense: monthTotalExpenses,
       categoryData: false,
-      allMonths: allMonths,
       incomeData: undefined,
     });
   } catch (err) {
@@ -130,6 +155,8 @@ router.get("/", auth.isUserLoggedIn, auth.userIsVerified, async (req, res) => {
   }
 });
 
+
+// this function is  to get the month  
 function getMonth() {
   let date = new Date();
   let month = date.getMonth() + 1;
@@ -160,4 +187,5 @@ function getNormalDate(arr) {
   });
   return result;
 }
+
 module.exports = router;
