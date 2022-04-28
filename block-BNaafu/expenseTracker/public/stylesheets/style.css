@@ -21,11 +21,11 @@ ul li {
   justify-content: space-between;
   align-items: center; }
 
-.flex-column, .dashboard-wrapper aside, .dashboard-wrapper aside form {
+.flex-column, .dashboard-wrapper aside, .dashboard-wrapper aside form, #formstyle form {
   display: flex;
   flex-direction: column; }
 
-.center {
+.center, #formstyle {
   display: flex;
   justify-content: center;
   align-items: center; }
@@ -142,5 +142,16 @@ form input {
   border-right: 0.5rem solid rgba(16, 173, 63, 0.945); }
   .history-container .income-history span {
     color: rgba(16, 173, 63, 0.945); }
+
+#formstyle {
+  flex-direction: column;
+  padding: 4% 0; }
+  #formstyle input {
+    padding: .8rem;
+    margin: 1rem; }
+
+.socialLoginContainer a {
+  display: inline-block;
+  margin: 0 2rem; }
 
 /*# sourceMappingURL=style.css.map */

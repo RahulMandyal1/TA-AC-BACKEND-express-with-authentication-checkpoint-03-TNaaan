@@ -4,6 +4,10 @@ module.exports = {
   //in then only user will be allowed to move forward anotherwise the
   // will be redirect to the log in page where the user can log in
   isUserLoggedIn: (req, res, next) => {
+    // if the user is logging with  the social account then
+    if (req.user._id) {
+      return next();
+    }
     if (req.session.userId) {
       return next();
     } else {
@@ -40,11 +44,14 @@ module.exports = {
       let userId = req.user._id.toString();
       let user = await User.findById(userId);
       if (user.isverified == true) {
+        console.log("yes the user is verified");
         return next();
       }
       // if the user is not verified then redirect him  to
       // verification page
-      return res.redirect("/users/verify");
+      else {
+        return res.redirect("/users/verify");
+      }
     } catch (err) {
       return res.redirect("/users/verify");
     }

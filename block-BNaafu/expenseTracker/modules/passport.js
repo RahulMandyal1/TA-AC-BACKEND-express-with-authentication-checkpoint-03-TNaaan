@@ -16,21 +16,17 @@ passport.use(
         name: profile.displayName,
         username: profile._json.name,
         email: profile._json.email,
-        socialLogin: true,
+        isverified: true,
+        //created a same password for all the accoutns logged
+        //in by the social becuase password is required in the schema
+        password: "thisisthesocialpassword",
       };
-      //   console.log(profile);
-      //   console.log(userdata);
       User.findOne({ email: profile._json.email }, (err, user) => {
-        console.log("this is the user i have found ", user);
-        console.log("Getting inside  this   one ");
         if (err) return done(err);
         if (!user) {
-          console.log("this is tyring to create the user");
           User.create(userdata, (err, user) => {
             if (err) {
-              console.log(
-                "user is not created there must be some problem in the schema"
-              );
+              return done(null);
             }
             if (err) return done(err);
             return done(null, user);
@@ -56,19 +52,16 @@ passport.use(
         name: profile.displayName,
         username: profile.username,
         email: profile._json.email,
-        socialLogin: true,
+        isverified: true,
+        //created a same password for all the accoutns logged
+        //in by the social becuase password is required in the schema
+        password: "thisisthesocialpassword",
       };
       User.findOne({ email: profile._json.email }, (err, user) => {
-        // console.log("Getting inside  this   one ");
         if (err) return done(err);
         if (!user) {
-          console.log("this is the userdata", userdata);
           User.create(userdata, (err, user) => {
-            console.log(" iam trying to create the user", user);
-            // console.log("Yeah this is getting inside this ");
             if (err) return done(err);
-            // console.log("this is the created user right now  ");
-            // console.log(user);
             done(null, user);
           });
         }
@@ -87,8 +80,6 @@ passport.serializeUser((user, done) => {
 // it will grab  the id  from the cookie and finds this in the database
 passport.deserializeUser((id, done) => {
   User.findById(id, "name , email ,usrname", (err, user) => {
-    console.log("hey user this is rahul thakur here ");
-    console.log(user);
     done(err, user);
   });
 });

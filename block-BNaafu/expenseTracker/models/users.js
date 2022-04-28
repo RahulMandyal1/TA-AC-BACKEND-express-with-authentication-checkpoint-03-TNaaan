@@ -16,19 +16,13 @@ let userSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-  },
-  phone: {
-    type: Number,
+    default: 18,
   },
   country: {
     type: String,
     default: "india",
   },
   isverified: {
-    type: Boolean,
-    default: false,
-  },
-  socialLogin: {
     type: Boolean,
     default: false,
   },

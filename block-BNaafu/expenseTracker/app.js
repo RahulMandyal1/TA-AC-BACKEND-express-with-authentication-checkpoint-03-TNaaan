@@ -16,7 +16,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/expenseTracker", (err) => {
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-const expensesRouter = require("./routes/expenses");
 const dashboard = require("./routes/dashboard");
 const auth = require("./middlewares/auth");
 var app = express();
@@ -57,7 +56,6 @@ app.use(auth.userInformation);
 // all the routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/expenses", expensesRouter);
 app.use("/dashboard", dashboard);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -13,8 +13,7 @@ router.get("/failure", (req, res) => {
 });
 
 router.get("/sucess", (req, res) => {
-  console.log(req.user);
-  res.send("  authetication is sucess user is logged in sucessfully");
+  return res.redirect("/");
 });
 
 //  these two routes are to login using  the google account

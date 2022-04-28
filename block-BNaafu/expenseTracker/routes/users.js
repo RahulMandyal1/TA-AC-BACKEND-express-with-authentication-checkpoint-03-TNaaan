@@ -51,6 +51,9 @@ router.post("/login", async (req, res) => {
         user.password
       );
       req.session.userId = user._id;
+      if (passwordIsMatched && user.isverified === true) {
+        res.redirect("/dashboard");
+      }
       res.redirect("/users/verify");
     }
     res.redirect("/users/login");
